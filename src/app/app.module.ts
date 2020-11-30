@@ -10,6 +10,11 @@ import { LayoutComponent } from './public/common/layout/layout.component';
 import { HeaderComponent } from './public/common/layout/header/header.component';
 import { SharedModule } from './shared/shared.module';
 import { NotFoundComponent } from './public/pages/not-found/not-found.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { environment } from 'src/environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
 
 
 @NgModule({
@@ -23,7 +28,9 @@ import { NotFoundComponent } from './public/pages/not-found/not-found.component'
     SharedModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

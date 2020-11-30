@@ -3,7 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './public/pages/not-found/not-found.component';
 
 const routes: Routes = [
-
+  {
+    path: '',
+    redirectTo: '/admin',
+    pathMatch: 'full'
+  },
   {
     path: 'not-found',
     component: NotFoundComponent

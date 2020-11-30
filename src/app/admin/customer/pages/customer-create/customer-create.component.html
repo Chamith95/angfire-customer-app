@@ -1,0 +1,190 @@
+<section class="page-wrapper">
+    <h1 class="mat-title">Create Customer</h1>
+    <form [formGroup]="createCustomerForm" (ngSubmit)="onSubmit()">
+    <div class="w-100 mt-4">
+     
+        <mat-card class="p-4">
+     
+                <div fxLayout.gt-sm="row" fxLayout.lt-md="column" class="w-100" fxLayoutGap="1rem">
+
+                    <mat-form-field class="w-100">
+                        <mat-label>Title</mat-label>
+                        <mat-select formControlName="title" required id="title" name="title">
+                            <mat-option></mat-option>
+                            <mat-option *ngFor="let title of titles" [value]="title">
+                                {{title}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('title')!.valid && createCustomerForm!.get('title')!.errors['required']">
+                            • Required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-100">
+                        <input matInput id="firstName" formControlName="firstName" name="firstName"
+                            placeholder="First Name" required maxlength="100">
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('firstName')!.valid && createCustomerForm!.get('firstName')!.errors['required']">
+                            • Required
+                        </mat-error>
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('firstName')!.valid && createCustomerForm!.get('firstName')!.errors['pattern']">
+                            • Only Alphanumeric Characters Are Allowed
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout.gt-sm="row" fxLayout.lt-md="column" class="w-100" fxLayoutGap="1rem">
+                    <mat-form-field class="w-100">
+                        <input matInput id="lastName" formControlName="lastName" name="lastName" placeholder="Last Name"
+                            required maxlength="100">
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('lastName')!.valid && createCustomerForm!.get('lastName')!.errors['required']">
+                            • Required
+                        </mat-error>
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('lastName')!.valid && createCustomerForm!.get('lastName')!.errors['pattern']">
+                            • Only Alphanumeric Characters Are Allowed
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-100">
+                        <input matInput id="email" formControlName="email" name="email" placeholder="Email" required
+                            maxlength="50">
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('email')!.valid && createCustomerForm!.get('email')!.errors['required']">
+                            • Required
+                        </mat-error>
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('email')!.valid && createCustomerForm!.get('email')!.errors['email']">
+                            • Please Enter a valid email
+                        </mat-error>
+                        <mat-hint>xxxx@gmail.com</mat-hint>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout.gt-sm="row" fxLayout.lt-md="column" class="w-100" fxLayoutGap="1rem">
+                    <mat-form-field class="w-100">
+                        <textarea matInput id="address" formControlName="address" name="address" placeholder="Address"
+                            maxlength="200"></textarea>
+
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout.gt-sm="row" fxLayout.lt-md="column" class="w-100" fxLayoutGap="1rem">
+                    <mat-form-field class="w-100">
+                        <input matInput id="city" formControlName="city" name="city" placeholder="City" maxlength="50">
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('city')!.valid && createCustomerForm!.get('city')!.errors['pattern']">
+                            • Only Alphanumeric Characters Are Allowed
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-100">
+                        <input matInput id="state" formControlName="state" name="state" placeholder="State"
+                            maxlength="50">
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('state')!.valid && createCustomerForm!.get('state')!.errors['pattern']">
+                            • Only Alphanumeric Characters Are Allowed
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout.gt-sm="row" fxLayout.lt-md="column" class="w-100" fxLayoutGap="1rem">
+                    <mat-form-field class="w-100">
+                        <input matInput id="zipCode" formControlName="zipCode" name="zipCode" placeholder="Zip Code"
+                            maxlength="6">
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('zipCode')!.valid && createCustomerForm!.get('zipCode')!.errors['pattern']">
+                            • Only Numeric Values Are Allowed
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-100">
+                        <mat-label>Birth Date</mat-label>
+                        <input matInput [matDatepicker]="picker" id="birthDate" formControlName="birthDate"
+                            name="birthDate" formControlName="birthday" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error
+                            *ngIf="!createCustomerForm!.get('birthday')!.valid && createCustomerForm!.get('birthday')!.errors['required']">
+                            • Valid date is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="w=100 mt-2">
+                    <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="2rem">
+                        <h3 class="mat-h3">Contact Details</h3>
+
+                        <button type="button" mat-raised-button color="primary" matTooltip="Create Contact" class
+                            (click)="onCreateButtonClick()"><i class="material-icons">add</i></button>
+                    </div>
+                    <div formArrayName="contacts" class="w-100">
+                        <div *ngFor="let item of contactformArray.controls; let i=index">
+                            <!-- The repeated alias template -->
+
+                            <div class="w-100" [formGroupName]="i" fxLayout.gt-sm="row" fxLayoutAlign="center center"
+                                fxLayout.lt-md="column" fxLayoutGap="1rem">
+                                <mat-form-field class="w-100">
+                                    <mat-label>Contact Type</mat-label>
+                                    <mat-select formControlName="contactType" required id="contactType"
+                                        name="contactType">
+                                        <mat-option></mat-option>
+                                        <mat-option *ngFor="let type of contactTypes" [value]="type">
+                                            {{type}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="item.get('contactType').hasError('required')">
+                                        • Required
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <input matInput id="value" formControlName="value" name="value" placeholder="Value"
+                                        maxlength="20">
+                                    <mat-error *ngIf="item.get('value').hasError('required')">
+                                        • Required
+                                    </mat-error>
+                                    <mat-error *ngIf="item.get('value').hasError('maxlength')">
+                                        • Max length Reached
+                                    </mat-error>
+                                    <mat-error *ngIf="item.get('value').hasError('minlength')">
+                                        • Need to exceed minimun characters
+                                    </mat-error>
+                                    <mat-hint>
+                                        +(Country code)(Mobile number)
+                                    </mat-hint>
+                                </mat-form-field>
+
+                                <button mat-icon-button type="button" color="warn" (click)="onRemoveContact(i)"
+                                    aria-label="Delete" matTooltip="Remove">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+       
+        </mat-card>
+        <mat-card class="w-100 mt-4">
+        <div class="w-100" *ngIf="!isLoading" fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="center center">
+          
+            <button mat-raised-button color="primary" type="submit">Create</button>
+            <button mat-raised-button color="warn" type="reset">Reset</button>
+            <button mat-raised-button type="button" (click)="onBackClick()">Back</button>
+      
+        </div>
+        <div *ngIf="isLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" class="w-100">
+            <mat-spinner [strokeWidth]="5" [diameter]="40"></mat-spinner>
+          </div>
+    </mat-card>
+
+    </div>
+</form>
+
+
+</section>
